@@ -1,0 +1,19 @@
+[Unit]
+Description=Filelab API server
+After=network.target
+
+[Service]
+Type=simple
+User=filelab
+Group=filelab
+WorkingDirectory=/opt/filelab
+EnvironmentFile=/etc/filelab.env
+ExecStart=/usr/local/bin/node --disable-warning=ExperimentalWarning /opt/filelab/server.mjs
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+KillMode=control-group
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

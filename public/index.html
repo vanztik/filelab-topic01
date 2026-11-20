@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Контактный лист изображений</title>
+<style>
+  body { max-width: 900px; margin: 32px auto; padding: 0 16px; font: 16px/1.5 system-ui, sans-serif; color: #202020; }
+  fieldset { border: 1px solid #ccc; padding: 12px 16px; margin: 0 0 16px; }
+  label { display: inline-block; margin: 4px 16px 4px 0; }
+  input[type=number] { width: 5em; }
+  button { font: inherit; padding: 6px 14px; margin: 4px 8px 4px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { border-bottom: 1px solid #ddd; padding: 6px; text-align: left; vertical-align: top; }
+  .mono { font-family: ui-monospace, monospace; font-size: 13px; }
+  .failed { color: #b00020; } .succeeded { color: #1b7f3b; }
+  #message { min-height: 1.5em; font-weight: 600; }
+  img.preview { image-rendering: pixelated; border: 1px solid #ccc; max-width: 100%; min-width: 64px; }
+</style>
+<h1>Контактный лист изображений</h1>
+<p>Выберите от 1 до 10 PNG (до 10 MiB каждый, до 50 MiB всего). Сервис соберёт превью в общую сетку на белом фоне.</p>
+
+<form id="job-form">
+  <fieldset>
+    <legend>Файлы</legend>
+    <input id="files" type="file" accept="image/png,.png" multiple required>
+  </fieldset>
+  <fieldset>
+    <legend>Параметры</legend>
+    <label>Столбцов (1–5) <input id="columns" type="number" min="1" max="5" step="1" value="2" required></label>
+    <label>Ширина ячейки (4–256) <input id="cellWidth" type="number" min="4" max="256" step="1" value="64" required></label>
+    <label>Высота ячейки (4–256) <input id="cellHeight" type="number" min="4" max="256" step="1" value="64" required></label>
+    <label>Отступ (0–20) <input id="gap" type="number" min="0" max="20" step="any" value="4" required></label>
+  </fieldset>
+  <button id="send" type="submit">Отправить</button>
+</form>
+<p id="message" aria-live="polite"></p>
+
+<h2>Найти задание по номеру</h2>
+<form id="find-form">
+  <input id="find-id" class="mono" size="40" placeholder="номер задания" required>
+  <button type="submit">Показать</button>
+</form>
+<div id="details"></div>
+
+<h2>Последние задания <button id="refresh" type="button">Обновить</button></h2>
+<table>
+  <thead><tr><th>Номер</th><th>Состояние</th><th>Создано</th><th>Файлы</th><th>Результат</th></tr></thead>
+  <tbody id="jobs"></tbody>
+</table>
+<script src="/app.js"></script>
+</html>
